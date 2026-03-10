@@ -1,0 +1,6 @@
+@reference "./index.css";
+
+/* Basic styling for each screen */
+.screen {
+  @apply h-screen overflow-hidden flex flex-col items-center justify-center bg-background text-foreground;
+}
