@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import styles from "../styles.module.css";
 import { authClient } from "../utils/auth";
 import { useState } from "react";
-import axiosInstance from "../utils/axiosInstance";
 
 export default function Home() {
   // Hooks
@@ -36,21 +35,8 @@ export default function Home() {
     }
   };
 
-  const handleSend = async () => {
-    try {
-      await axiosInstance.get("/test/test", {
-        headers: {
-          Authorization: `Bearer ${session?.session?.token}`,
-          "Content-Type": "application/json",
-        },
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to send");
-    }
-  };
-
   if (isPending) {
+    // Skeleton
     return (
       <div className={styles.screen}>
         <p>Loading...</p>
@@ -68,11 +54,6 @@ export default function Home() {
         <button onClick={() => navigate("/admin")}>
           <div className=" bg-secondary text-foreground px-6 py-2 rounded-md hover:scale-105">
             Admin
-          </div>
-        </button>
-        <button onClick={handleSend}>
-          <div className=" bg-secondary text-foreground px-6 py-2 rounded-md hover:scale-105">
-            Send
           </div>
         </button>
         <button

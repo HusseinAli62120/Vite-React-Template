@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: false, // Since the HTTP cookie is only used in the auth process, and it is managed by better-auth.
+  withCredentials: false, // Since the HTTP cookie Needs to be sent with the request
 });
 
 export default axiosInstance;
