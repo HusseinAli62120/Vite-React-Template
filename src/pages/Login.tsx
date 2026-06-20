@@ -14,7 +14,7 @@ export default function Login() {
       id: "1",
       userName: "test",
       email: "[EMAIL_ADDRESS]",
-      role: "admin",
+      role: "USER",
       accessToken: "test",
     };
     // Set to local storage

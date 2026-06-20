@@ -70,7 +70,8 @@
 }
 
 /* This kills all transitions immediately when applied (To prevetn flash when refreshing) */
-.no-transitions * {
+.no-transitions *,
+.no-transitions {
   transition: none !important;
   -webkit-transition: none !important;
   -moz-transition: none !important;

@@ -35,7 +35,15 @@ export default function Home() {
       <h1 className="text-3xl font-bold">Home</h1>
       <div className=" flex items-center justify-center gap-4">
         <button
-          className=" bg-success px-6 py-2 rounded-md hover:scale-105"
+          className=" bg-secondary px-6 py-2 rounded-md hover:scale-105"
+          onClick={() => {
+            navigate("/admin");
+          }}
+        >
+          Admin
+        </button>
+        <button
+          className=" bg-secondary px-6 py-2 rounded-md hover:scale-105"
           onClick={() => {
             const themeValue: theme = theme === "dark" ? "light" : "dark";
             toggleTheme({ themeValue, setTheme });
@@ -53,7 +61,7 @@ export default function Home() {
           Show toast
         </button>
         <button
-          className=" bg-secondary text-foreground px-6 py-2 rounded-md hover:scale-105"
+          className=" bg-error text-white px-6 py-2 rounded-md hover:scale-105"
           onClick={() => {
             ls.remove("auth");
             setAuth(null);

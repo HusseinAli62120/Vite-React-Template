@@ -18,7 +18,7 @@ export default function App() {
       <Route path="/" element={<Root />}>
         <Route element={<PersistLogin />}>
           {/* Pages that require auth */}
-          <Route element={<RequireAuth allowedUsers={["admin", "user"]} />}>
+          <Route element={<RequireAuth allowedUsers={["ADMIN", "USER"]} />}>
             <Route index element={<Home />} />
           </Route>
 

@@ -15,22 +15,22 @@ To use this template fork the repo/use this template, and then once you have it 
 
 1. `npm install`
 2. in the **src** directory, create the following files (**if you are using a backend** and need them):
-    1. .env.development
-    2. .env.testing
-    3. .env.production
+   1. .env.development
+   2. .env.test
+   3. .env.production
 3. Run different commands for different environments
-    1. To run the development environment (use .env.development) 
-    run: **`npm run dev`  
-    📌** This is the one we use for development.
-    2. To run the development environment but with the testing variables (use .env.testing)
-    run: **`npm run dev:testing`  
-    📌** Use this to test the testing environment.
-    3. To build the app with the testing variables (use .env.testing)
-    run: **`npm build:testing`  
-    📌** Use this if you have a frontend deployed only for testing.
-    4. To build the app with the testing variables (use .env.production)
-    run: **`npm build`  
-    📌** Use this when deploying the frontend.
+   1. To run the development environment (use .env.development)
+      run: **`npm run dev`  
+      📌** This is the one we use for development.
+   2. To run the development environment but with the testing variables (use .env.test)
+      run: **`npm run dev:test`  
+      📌** Use this to test the test environment.
+   3. To build the app with the test variables (use .env.test)
+      run: **`npm build:test`  
+      📌** Use this if you have a frontend deployed only for testing.
+   4. To build the app with the testing variables (use .env.production)
+      run: **`npm build`  
+      📌** Use this when deploying the frontend.
 
 ### Control Components:
 
@@ -47,12 +47,13 @@ The template also has some control components:
 The template comes with two styling files
 
 - **index.css:** This is the file used for theme definition, here we add colors, and make them into utility classes.  
-  📌 Use this file to add colors — In **`:root`** for light mode, and in **`.dark`** for dark mode — then add those colors in the **`@theme`** to make them into utility classes with IDE intelsense.  
+  📌 Use this file to add colors — In **`:root`** for light mode, and in **`.dark`** for dark mode — then add those colors in the **`@theme`** to make them into utility classes with IDE intelsense.
 
   📌 Do not change the **.no-transitions** class — used to prevent flashing when refreshing — or the styles applied to the body — used to prevent flashing when changing pages.
+
 - **styles.module.css:** This file is used for to apply styles that are common to all page. Right now, it only has a **`.screen`** class, that applies the basic styles **for a one page, non-scrollable screen.**
-This class should be applied to the top `<div>` of the component.  
-**📌** You can add styles for other screen — scrollable ones — here if need be.
+  This class should be applied to the top `<div>` of the component.  
+  **📌** You can add styles for other screen — scrollable ones — here if need be.
 
 ### State Management:
 
@@ -77,11 +78,11 @@ The template contains three utility functions:
 ### Some notes:
 
 - If you are building an app that does not have authentication, then you can delete the following:
-    - **`<RequireAuth>`**
-    - **`<PersistLogin>`**
-    - **`<Unauthorized>`**
-    - The auth type
-    - **useRefresh** hook
-    - auth context & its hook
-    
+  - **`<RequireAuth>`**
+  - **`<PersistLogin>`**
+  - **`<Unauthorized>`**
+  - The auth type
+  - The Role type
+  - **useRefresh** hook
+  - auth context & its hook
     📌 Make sure to remove the auth related variables in **`<Root>`** as well.

@@ -36,12 +36,12 @@ const PersistLogin = () => {
         console.error("Persistence error:", err);
       } finally {
         // For testing skeletons
-        setTimeout(() => {
-          setSiteLoading(false);
-        }, 2000);
+        // setTimeout(() => {
+        //   setSiteLoading(false);
+        // }, 2000);
       }
 
-      // setSiteLoading(false);
+      setSiteLoading(false);
     };
 
     verifyPersistence();
