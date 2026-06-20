@@ -1,21 +1,23 @@
-import { useContext } from "react";
 import { Outlet, useLocation, Navigate } from "react-router-dom";
-import authContext from "../context/authContext";
-import lsInstance from "../utils/lsInstance";
+import { authClient } from "../utils/auth";
+import type { Role } from "../types/Role";
 
-export default function RequireAuth({ allowedUsers }: { allowedUsers: any[] }) {
-  const { auth } = useContext(authContext);
+export default function RequireAuth({
+  allowedUsers,
+}: {
+  allowedUsers: Role[];
+}) {
   const location = useLocation();
-  // Use this so as to not momentarily flash the login page.
-  const storedAuth = lsInstance.get("auth");
+  const { data: session, isPending } = authClient.useSession();
 
   // We pass the allowed roles in allowedUsers, if the current user has one of these roles, then he/she is in.
-  return auth && allowedUsers?.includes(auth?.role?.toLocaleLowerCase()) ? (
+  return session?.user &&
+    allowedUsers?.includes(session?.user?.role as Role) ? (
     <Outlet />
-  ) : auth ? (
+  ) : // If not, but the user is still logged in, then they are unauthorized
+  session?.user?.username ? (
     <Navigate to={"/unauthorized"} state={{ from: location }} replace />
   ) : (
-    !storedAuth &&
-    !auth && <Navigate to={"/login"} state={{ from: location }} replace />
+    !isPending && <Navigate to={"/login"} state={{ from: location }} replace />
   );
 }

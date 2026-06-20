@@ -1,41 +1,82 @@
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import useTheme from "../hooks/useTheme";
 import type { theme } from "../types/theme";
 import toggleTheme from "../utils/toggleTheme";
-import SecureLS from "secure-ls";
-import { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import lsInstance from "../utils/lsInstance";
-import useSiteLoading from "../hooks/useSiteLoading";
 import styles from "../styles.module.css";
+import { authClient } from "../utils/auth";
+import { useState } from "react";
+import axiosInstance from "../utils/axiosInstance";
 
 export default function Home() {
+  // Hooks
   const { theme, setTheme } = useTheme();
-  const { setAuth } = useAuth();
-  const { siteLoading } = useSiteLoading();
   const navigate = useNavigate();
+  const { data: session, isPending } = authClient.useSession();
 
-  // Delete all this
-  const ls = new SecureLS({ encodingType: "aes", isCompression: true });
-  const [localStorageValue, setLocalStorageValue] = useState("");
+  // States
+  const [logoutLoading, setLogoutLoading] = useState(false);
 
-  useEffect(() => {
-    setLocalStorageValue(lsInstance.get("auth"));
-  }, []);
-  // Delete
+  // Functions
+  const handleLogout = async () => {
+    setLogoutLoading(true);
+    try {
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            navigate("/login");
+          },
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to logout");
+    } finally {
+      setLogoutLoading(false);
+    }
+  };
 
-  if (siteLoading) {
-    return <div className={styles.screen}>Loading Home...</div>;
+  const handleSend = async () => {
+    try {
+      await axiosInstance.get("/test/test", {
+        headers: {
+          Authorization: `Bearer ${session?.session?.token}`,
+          "Content-Type": "application/json",
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to send");
+    }
+  };
+
+  if (isPending) {
+    return (
+      <div className={styles.screen}>
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
     <div className={styles.screen}>
-      {/* Delete here and start */}
-      <h1 className="text-3xl font-bold">Home</h1>
+      <p className="mb-3">
+        Hello <span className="font-semibold">{session?.user?.name} 👋</span>{" "}
+        Welcome to this template.
+      </p>
       <div className=" flex items-center justify-center gap-4">
+        <button onClick={() => navigate("/admin")}>
+          <div className=" bg-secondary text-foreground px-6 py-2 rounded-md hover:scale-105">
+            Admin
+          </div>
+        </button>
+        <button onClick={handleSend}>
+          <div className=" bg-secondary text-foreground px-6 py-2 rounded-md hover:scale-105">
+            Send
+          </div>
+        </button>
         <button
-          className=" bg-success px-6 py-2 rounded-md hover:scale-105"
+          className=" bg-secondary text-foreground px-6 py-2 rounded-md hover:scale-105"
           onClick={() => {
             const themeValue: theme = theme === "dark" ? "light" : "dark";
             toggleTheme({ themeValue, setTheme });
@@ -46,27 +87,18 @@ export default function Home() {
         <button
           className=" bg-secondary text-foreground px-6 py-2 rounded-md hover:scale-105"
           onClick={() => {
-            console.log("show toast");
             toast.info("My first toast");
           }}
         >
           Show toast
         </button>
         <button
-          className=" bg-secondary text-foreground px-6 py-2 rounded-md hover:scale-105"
-          onClick={() => {
-            ls.remove("auth");
-            setAuth(null);
-            navigate("/login");
-          }}
+          className=" bg-error text-white px-6 py-2 rounded-md hover:scale-105"
+          onClick={handleLogout}
         >
-          Logout
+          {logoutLoading ? "Logging out..." : "Logout"}
         </button>
       </div>
-      <p>Current theme: {theme}</p>
-      <p>Local storage value: {JSON.stringify(localStorageValue)}</p>
-      <Toaster richColors theme={theme} position="top-center" duration={2000} />
-      {/* Delete */}
     </div>
   );
 }
