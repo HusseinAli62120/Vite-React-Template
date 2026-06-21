@@ -1,4 +1,4 @@
-# 🚀Vite-React-Template
+# 🚀Vite-React-Template (Base)
 
 
 This is a Frontend template for React, using Vite. It provides auth control & dark mode support out of the box. 
@@ -49,7 +49,7 @@ To use this template fork the repo/use this template, and then once you have it 
 The template also has some control components:
 
 - **`<RequireAuth />`**: To control who has access to pages.
-- **`<PersistLogin /**>` To provide login persistence on page refresh.
+- **`<PersistLogin />`** To provide login persistence on page refresh.
 - **`<ThemeProvider />`**: For Theme control.
 
 📌 You should try your best to not alter these components, since they already serve their purpose, and work together   
